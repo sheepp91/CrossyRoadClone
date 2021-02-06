@@ -27,13 +27,14 @@ public class PlayerMovement : MonoBehaviour
     private void Walk()
     {
         startPos = transform.position;
-        if (Input.anyKeyDown && !isMoving & !isTurning)
+        if (Input.anyKeyDown && !isMoving && !isTurning)
         {
             desPos = transform.position;
             if (Input.GetKeyDown(KeyCode.W)) // Forward
             {
                 desPos.x++;
                 FindNewRotation(Vector3.forward);
+                CheckShouldIncreaseScore(desPos.x);
             }
             else if (Input.GetKeyDown(KeyCode.S)) // Backward
             {
@@ -54,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isJumping", isMoving);
         }
 
-        if (isMoving)
+        /*if (isMoving)
         {
             if (fractionForPos < 1)
             {
@@ -68,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
                 fractionForPos = 0;
                 animator.SetBool("isJumping", isMoving);
             }
-        }
+    }*/
     }
 
     private void Turn()
@@ -94,5 +95,24 @@ public class PlayerMovement : MonoBehaviour
             desRot = Quaternion.LookRotation(dirToTurn);
             isTurning = true;
         }
+    }
+
+    private void CheckShouldIncreaseScore(float currentX)
+    {
+        if (currentX > PointSystem.Instance.GetScore())
+        {
+            PointSystem.Instance.AddScore();
+        }
+    }
+
+    private void AnimationComplete()
+    {
+        isMoving = false;
+        animator.SetBool("isJumping", isMoving);
+        Vector3 pos = transform.position;
+        pos.y = 0;
+        pos.x = Mathf.Round(pos.x);
+        pos.z = Mathf.Round(pos.z);
+        transform.position = pos;
     }
 }
