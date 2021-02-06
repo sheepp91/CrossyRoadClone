@@ -9,7 +9,6 @@ public class PlayerAttributes : MonoBehaviour
     {
         if (col.gameObject.tag == "Car")
         {
-            print("Died");
             PlayerDied();
         }
     }

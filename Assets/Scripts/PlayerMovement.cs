@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
                 fractionForPos = 0;
                 animator.SetBool("isJumping", isMoving);
             }
-    }*/
+        }*/
     }
 
     private void Turn()

@@ -5,16 +5,20 @@ using UnityEngine;
 public class ObjectMovement : MonoBehaviour
 {
     public float speed = 5;
-
-    void Start()
-    {
-        
-    }
+    private float maxDistanceToDeath = -10;
 
     void Update()
     {
-        Vector3 newPos = transform.position;
-        newPos.z -= speed * Time.deltaTime;
-        transform.position = newPos;
+        Vector3 pos = transform.position;
+        if (pos.z < maxDistanceToDeath)
+        {
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            // Move
+            pos.z -= speed * Time.deltaTime;
+            transform.position = pos;
+        }
     }
 }
